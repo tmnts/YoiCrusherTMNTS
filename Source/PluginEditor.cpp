@@ -3,14 +3,21 @@
 
 void YoiCrusherTMNTSAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    g.fillAll (juce::Colour (0xff1e1e1e)); // VS Code Background
-    g.setColour (juce::Colours::cyan);
-    g.setFont (juce::Font ("Consolas", 14.0f, juce::Font::plain));
+    // VS Code Dark Background
+    g.fillAll (juce::Colour (0xff1e1e1e)); 
 
-    g.drawText ("> YOI_CRUSHER_TMNTS_LOADED", 20, 20, 300, 20, juce::Justification::left);
-    g.drawText ("> STATUS: READY_TO_CRUSH", 20, 40, 300, 20, juce::Justification::left);
+    // Берем LFO из процессора и делаем из него прозрачность (Alpha)
+    float lfo = audioProcessor.lastLfoValue;
+    float alpha = 0.4f + (lfo + 1.0f) * 0.3f; // Пульсация от 0.4 до 1.0
+
+    // Розовый неон
+    juce::Colour neonPink = juce::Colour (0xffff69b4).withAlpha (alpha);
+    g.setColour (neonPink);
     
-    // Рисуем неоновый круг
-    auto area = getLocalBounds().reduced (60).toFloat();
-    g.drawEllipse (area, 2.0f);
+    g.setFont (juce::Font ("Consolas", 16.0f, juce::Font::bold));
+    g.drawText ("> YOINESS_ACTIVE", 25, 25, 300, 20, juce::Justification::left);
+    g.drawText ("> STATUS: CRUSHING_BY_BPM", 25, 45, 300, 20, juce::Justification::left);
+
+    // Пульсирующая рамка
+    g.drawRect (getLocalBounds().reduced (15), (int)(alpha * 4.0f));
 }

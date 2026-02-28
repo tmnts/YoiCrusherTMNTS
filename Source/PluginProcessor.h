@@ -30,5 +30,11 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override {}
 
 private:
+    float lfoPhase = 0.0f;     // Текущая фаза LFO
+    float lastLfoValue = 0.0f; // Переменная для передачи значения в интерфейс
+    
+    // Делаем интерфейс другом, чтобы он видел lastLfoValue
+    friend class YoiCrusherTMNTSAudioProcessorEditor; 
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YoiCrusherTMNTSAudioProcessor)
 };
