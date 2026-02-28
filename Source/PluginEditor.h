@@ -1,15 +1,17 @@
 #pragma once
 #include "PluginProcessor.h"
 
-class YoiCrusherTMNTSAudioProcessorEditor : public juce::AudioProcessorEditor
+class YoiCrusherTMNTSAudioProcessorEditor : public juce::AudioProcessorEditor, public juce::Timer
 {
 public:
     YoiCrusherTMNTSAudioProcessorEditor (YoiCrusherTMNTSAudioProcessor& p) : AudioProcessorEditor (&p), audioProcessor (p) 
     {
         setSize (400, 300); // Размер окна плагина в Ableton
+        startTimerHz(60); // 60 кадров в секунду
     }
 
     void paint (juce::Graphics&) override;
+    void timerCallback() override { repaint(); }
     void resized() override {}
 
 private:
